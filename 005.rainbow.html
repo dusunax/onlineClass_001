@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>HEEEELLOOOW</title>
+  <link rel="stylesheet" href="css/005.css">
+</head>
+<body>
+  <div class="wrap">
+    <h1>Vamos</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, quod.</p>
+    <p class="foo">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, quod.</p>
+    <p class="foo">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, quod.</p>
+    <span>🌈</span>
+    <img src="img/005.png" alt="rainbow-img">
+    <img src="img/005_2.png" alt="rainbow-img">
+    <p class="foo">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, quod.</p>
+    <p class="foo">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, quod.</p>
+    <p class="foo">Lorem ipsum dolor sit amet, consectetur.</p>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      let foo=document.querySelectorAll(".foo");
+      for(let i=0; i<foo.length; i++){
+        foo[i].style.transitionDelay=`0.${i * 2}s`
+      }
+    });
+  </script>
+</body>
+</html>

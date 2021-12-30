@@ -1,0 +1,28 @@
+  a {
+    color: inherit;
+    text-decoration: none;
+    background: #A3DA8D;
+  }
+  img {
+    box-shadow: 2px 2px 5px 0 #aaa;
+    border-radius: 50%;
+    transition: transform 1s;
+  }
+  img:hover {
+    transform: rotate(360deg);
+  }
+  table.skill {
+    display: inline-block;
+    vertical-align: top;
+  }
+  hr {
+    width: 10%;
+    border-style: none;
+    border-top: 10px dotted #aaa;
+  }
+  h1 {
+    color: #F3C892;
+  }
+  strong {
+    color: #146356;
+  }

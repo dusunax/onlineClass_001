@@ -1,0 +1,27 @@
+.wrap {
+  text-align: center;
+}
+h1 {
+  font-size: 200px;
+  line-height: 0;
+}
+img,
+span {
+  font-size: 100px;
+  padding: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: black;
+  transition: all 1s;
+}
+img:hover,
+span:hover {
+    transform: rotate(360deg);
+}
+.foo {
+  opacity: .2;
+  transition: all 1s;
+}
+.wrap:hover .foo {
+  opacity: 1;
+}
