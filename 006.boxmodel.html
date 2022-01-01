@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>the box model : CSS basic</title>
+  <style>
+    body {
+      margin: 0;
+    }
+    .wrap {
+      border: 1px dotted #aaa;
+    }
+    .box {
+      background-color: #ddd;
+      width: 200px;
+      height: 200px;
+      border: 10px solid #000;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+    .red {
+      background-color: red;
+      margin-left: 200px;
+      border-width: 20px;
+    }
+    .yellow {
+      background-color: yellow;
+      margin-left: 400px;
+    }
+    <!-- wrap2 -->
+    h1 {
+      text-align: center;
+      line-height: 70px;
+    }
+    .relative {
+      height: 200px;
+      position: relative;
+    }
+    .relative .box {
+      position: absolute;
+    }
+    .box.A {
+      background-color: blue;
+    }
+    .box.B {
+      background-color: red;
+      left: 400px;
+    }
+    .box.C {
+      background-color: yellow;
+      left: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="box text">
+      <h3>Lorem ipsum dolor.</h3>
+      <p>Lorem ipsum.</p>
+    </div>
+    <div class="box red"></div>
+    <div class="box yellow"></div>
+  </div>
+  <div class="wrap relative">
+    <div class="box A">
+      <h1>A</h1>
+    </div>
+    <div class="box B">
+      <h1>B</h1>
+    </div>
+    <div class="box C">
+      <h1>C</h1>
+    </div>
+  </div>
+</body>
+</html>
