@@ -11,12 +11,7 @@ ul, li {
 body {
   font-family: 'Ubuntu', sans-serif;
   font-family: 'Montserrat', sans-serif;
-  background-color: #ff4c68;
-  background-color: skyblue;
-}
-#title {
-  color: #fff;
-  margin-bottom: 5%;
+  /* background-color: #ff4c68; */
 }
 h1 {
   font-family: 'Montserrat', sans-serif;
@@ -38,11 +33,14 @@ h3 {
 p {
   color: #8f8f8f;
 }
+header {
+  background-color: var(--bgColor-theme);
+  color: var(--txtColor-theme);
+}
 .navbar {
   padding: 0;
-  padding-bottom: 4.5rem;
-  padding-right: calc(var(--bs-gutter-x) * .5);
-  padding-left: calc(var(--bs-gutter-x) * .5);
+  padding-right: 12px;
+  padding-left: 12px;
 }
 .navbar-brand {
   font-family: 'Ubuntu', sans-serif;
@@ -56,26 +54,36 @@ p {
   font-size: 1.2rem;
   font-weight: 400;
 }
-.download-btn {
-  margin: 5% 3% 5% 0;
+/* title */
+#title {
+  background-color: var(--bgColor-theme);
+  color: var(--txtColor-theme);
+  padding-top: 4.5rem;
+  padding-bottom: 6rem;
+}
+#title > .container {
+  padding: 0;
+}
+.title-img_box {
+  position: relative;
 }
 .title-img {
   width: 60%;
   transform: rotate(25deg);
+  position: absolute;
+  right: 25%;
 }
-.sec1 {
-  padding-top: 56px;
+.download-btn {
+  margin: 5% 3% 5% 0;
 }
 /* features */
 #features {
   padding: 7% 15%;
   background-color: #fff;
+  position: relative;
 }
 .features_box {
   text-align: center;
-}
-.features_box li {
-  padding: 4.5% 0;
 }
 .features_box .icon {
   color: var(--bgColor-theme);
@@ -88,10 +96,12 @@ p {
 }
 /* testimonials */
 #testimonials {
-  padding: 7% 15%;
   background-color: var(--bgColor-theme);
   color: var(--txtColor-theme);
   text-align: center;
+}
+#testimonials .carousel-item {
+  padding: 7% 15%;
 }
 .testimonials-img {
   width: 10%;
@@ -103,10 +113,29 @@ p {
 }
 /* press */
 #press {
+  background-color: var(--bgColor-theme);
+  color: var(--txtColor-theme);
   text-align: center;
   padding-bottom: 3%;
 }
 .press-logo {
   width: 15%;
   margin: 20px 20px 50px;
+}
+/* pricing */
+#pricing {
+  padding: 100px;
+  text-align: center;
+}
+.pricing_text_top {
+  padding: 3% 2%;
+}
+.cards {
+  margin-bottom: 20px;
+}
+.card {
+  height: 100%;
+}
+@media (max-width: 1030px) {
+
 }
