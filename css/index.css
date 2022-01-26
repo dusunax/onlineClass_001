@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 @font-face {
-    font-family: 'RixYeoljeongdo_Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/RixYeoljeongdo_Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'RixYeoljeongdo_Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/RixYeoljeongdo_Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 /* common css */
 body {
@@ -26,6 +26,7 @@ body {
 }
 h1, h2, h3 {
   font-family: 'RixYeoljeongdo_Regular';
+  margin: 0;
 }
 h2 {
   color: #555;
@@ -35,6 +36,7 @@ h3 {
 }
 p {
   line-height: 2;
+  margin: 0;
 }
 hr {
   width: 10%;
@@ -54,7 +56,7 @@ hr {
   margin: 0 auto;
 }
 #lottie path {
-    /* stroke: red; */
+  /* stroke: red; */
 }
 button {
   all: unset;
@@ -92,7 +94,7 @@ button.on {
 .top_container h4 {
   font-weight: normal;
 }
-.top_container > * {
+.top_container>* {
   position: relative;
 }
 .top_container .color_matte {
@@ -138,8 +140,12 @@ button.on {
   animation: spin360 8s linear infinite;
 }
 @keyframes spin360 {
-  0% {transform: rotate(0deg)}
-  100% {transform: rotate(360deg)}
+  0% {
+    transform: rotate(0deg)
+  }
+  100% {
+    transform: rotate(360deg)
+  }
 }
 /* 섹션ul */
 .sec_ul {
@@ -154,7 +160,7 @@ button.on {
   border-radius: 10px;
 }
 /* 본문 컨텐츠 시작 */
-.middle_container > div {
+.middle_container>div {
   margin-bottom: 80px;
 }
 /* profile */
@@ -164,8 +170,8 @@ button.on {
 .profile img {
   float: left;
 }
-.profile > h2,
-.profile > p {
+.profile>h2,
+.profile>p {
   width: calc(100% - 300px - 50px);
   float: right;
 }
@@ -180,8 +186,29 @@ button.on {
 .portfolio img {
   float: left;
 }
-.portfolio-row {
-  overflow: hidden;
+.col {
+  display: flex;
+  gap: 30px;
+}
+.col-img-top {
+  flex: 0 0 50%;
+  height: 300px;
+  background-color: #eee;
+  border-radius: 10px;
+  padding-top: 0.7em;
+  padding-left: 0.7em;
+}
+.dots {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background-color: #f44;
+  box-shadow: 0 0 0 0px #f44, 25px 0 0 0px #9b3, 50px 0 0 0px #fb5;
+}
+.col-text {
+  border-left: 5px solid #000;
+  padding-left: 20px;
+  margin-bottom: 5%;
 }
 /* contact-me */
 .contact-me {
