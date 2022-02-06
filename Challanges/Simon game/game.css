@@ -35,6 +35,10 @@ body {
   font-size: 3em;
   flex: 1 1 calc(50% - 20px);
   cursor: pointer;
+  pointer-events: auto;
+}
+.btn.unable {
+  pointer-events: none;
 }
 .cyan {
   background-color: #55FFFF;
