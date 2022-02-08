@@ -1,3 +1,4 @@
 *.hwp
 /예시
 /node_modules
+**/node_modules
