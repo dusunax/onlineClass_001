@@ -5,6 +5,10 @@ body {
   font-family: 'Dongle', sans-serif;
   font-size: 1.75em;
   font-weight: 800;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
 }
 h1,h2,h3,h4,h5,p {
   margin: 0;
@@ -45,10 +49,12 @@ h1,h2,h3,h4,h5,p {
   background-color: #fff;
   box-shadow: 1px 1px 5px rgba(0, 0, 155, 0.2);
   border-radius: 10px;
+  margin-bottom: 8px;
 }
-/* .search_city {
-  width: 100%;
-} */
+.search_city {
+  width: calc(100% - 50px);
+  max-width: 160px;
+}
 .search_city::placeholder {
   color: #ddd;
 }
@@ -68,7 +74,8 @@ h1,h2,h3,h4,h5,p {
 }
 .favorite_btn {
   border-radius: 50%;
-  margin: 0 2px;
+  margin-left: 2px;
+  margin-right: 2px;
   background-color: #B4C0D9;
   color: #fff;
   transition: all 0.2s;
@@ -96,4 +103,20 @@ h1,h2,h3,h4,h5,p {
 .weather_img {
   width: 50%;
   max-width: 150px;
+  animation: floating 4s 5;
+}
+@media (max-width: 400px) {
+  body {
+    font-size: 1.5em;
+  }
+  .search_city_btn {
+    width: calc(100% - 50px);
+    max-width: 160px;
+  }
+  .favorite {
+    font-size: 1rem;
+  }
+}
+@keyframes floating {
+  50% {transform: translateY(-10px);}
 }
