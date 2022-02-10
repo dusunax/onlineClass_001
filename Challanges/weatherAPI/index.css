@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&display=swap');
+
+body {
+  background-color: #eee;
+  font-family: 'Dongle', sans-serif;
+  font-size: 1.75em;
+  font-weight: 800;
+}
+h1,h2,h3,h4,h5,p {
+  margin: 0;
+}
+.shader {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#fefefe, transparent);
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+/* 본문 */
+.app {
+  width: calc(100% - 20px);
+  max-width: 500px;
+  padding: 50px 0;
+  margin-top: 20px;
+
+  box-shadow: 5px 5px 5px rgba(0, 0, 155, 0.1);
+  background-color: rgba(255, 255, 255, 0.6);
+  background-image: url(img/bg/clouds.jpg);
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  top: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.search_city,
+.search_city_btn,
+.favorite_btn {
+  all: unset;
+  height: 40px;
+  padding: 0 16px;
+  background-color: #fff;
+  box-shadow: 1px 1px 5px rgba(0, 0, 155, 0.2);
+  border-radius: 10px;
+}
+/* .search_city {
+  width: 100%;
+} */
+.search_city::placeholder {
+  color: #ddd;
+}
+.search_city_btn {
+  background-color: #444;
+  color: #fff;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.search_city_btn:hover {
+  background-color: #222;
+}
+/* 즐겨찾기 */
+.favorite {
+  margin-top: 20px;
+  font-size: 1.2rem;
+}
+.favorite_btn {
+  border-radius: 50%;
+  margin: 0 2px;
+  background-color: #B4C0D9;
+  color: #fff;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.favorite_btn:hover {
+  color: #555;
+  background-color: #F2E6DF;
+}
+/* 날씨정보 */
+.city_info {
+  margin: 20px 0 10px;
+  color: #143373;
+  font-size: 2rem;
+}
+.name {
+  color: #143373;
+}
+.weather {
+  color: #6A7EA6;
+}
+.temperture {
+  color: #143373;
+}
+.weather_img {
+  width: 50%;
+  max-width: 150px;
+}
