@@ -5,6 +5,7 @@ const https = require('https');
 
 // use
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname));
 // get
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/index.html');
