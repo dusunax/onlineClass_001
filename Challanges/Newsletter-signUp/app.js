@@ -10,6 +10,12 @@ app.get("/", function(req, res){
   res.sendFile(__dirname + "/signup.html");
 });
 // post
+app.post('/failure', (req, res)=>{
+  res.redirect('/');
+})
+app.post('/success', (req, res)=>{
+  res.redirect('/');
+})
 app.post("/", function(req, res){
   console.log('posted complate');
   const name=req.body.name;
@@ -22,7 +28,7 @@ app.post("/", function(req, res){
       {
         email_address: email,
         status: "subscribed",
-        merge_field: {
+        merge_fields: {
           FNAME: name,
           NNAME: nickname
         }
@@ -36,16 +42,24 @@ app.post("/", function(req, res){
     auth: "meme:e83e23dc566f144d16df76f4c24eabe7-us14"
   }
   const request=https.request(url, options, function(response){
+    // console.log(response);
+    console.log(response.statusCode);
     response.on('data', function(data){
-      console.log(JSON.parse(data));
+      const res_data=JSON.parse(data);
+      if(res_data.errors.length > 0){
+        console.log(res_data.errors);
+        res.sendFile(__dirname + '/failure.html');
+      } else if(response.statusCode === 200){
+        res.sendFile(__dirname + '/success.html');
+      }
     });
   });
   request.write(jsonData);
   request.end();
 });
 // listen
-app.listen(3000, function(){
-  console.log('sever is running on port 3000');
+app.listen(process.env.PORT || 3000, function(){
+  console.log('sever is running');
 });
 
 // e83e23dc566f144d16df76f4c24eabe7-us14
