@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>투두리스트 EJS</title>
+</head>
+
+<body>
+  <div class="dateTest">
+    <h3>오늘은 <%= currentDate %>일 <%= currentDay %>요일</h3>
+    <h2><%= isWeekend %>입니다.</h2>
+    <h4 style="text-decoration: underline"><%= localeDate %></h4>
+    <% if(1){ %>
+    <h1 style="color: blue;"> TRUE </h1>
+    <% } else { %>
+    <h1 style="color: red"> FALSE </h1>
+    <% } %>
+  </div>
+  <hr>
+
+  <ul>
+    <!-- <li><%= items %></li> -->
+
+    <% for(let i=0; i<items.length; i++){ %>
+      <li> <%= items[i] %> </li>
+    <% } %>
+  </ul>
+  <form action="/" method="post">
+    <input type="text" name="newList" placeholder="입력하세요.">
+    <button class="btn_submit" type="submit" name="btn_submit">
+      추가하기
+    </button>
+  </form>
+</html>
+</body>
