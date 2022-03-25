@@ -7,6 +7,7 @@ let items=[];
 
 // use
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('public'));
 
 // set
 app.set('view engine', 'ejs');

@@ -6,33 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>투두리스트 EJS</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-  <div class="dateTest">
-    <h3>오늘은 <%= currentDate %>일 <%= currentDay %>요일</h3>
-    <h2><%= isWeekend %>입니다.</h2>
+  <header class="box header">
+    <h1>오늘은 <%= currentDate %>일 <%= currentDay %>요일</h1>
     <h4 style="text-decoration: underline"><%= localeDate %></h4>
-    <% if(1){ %>
-    <h1 style="color: blue;"> TRUE </h1>
-    <% } else { %>
-    <h1 style="color: red"> FALSE </h1>
-    <% } %>
-  </div>
-  <hr>
+  </header>
+  <section class="box toDo">
+    <div class="item">
+      <input type="checkbox">
+      <p><%=  isWeekend  %>입니다.</p>
+    </div>
+    <div class="dateTest">
+    </div>
+    <ul>
+      <% for(let i=0; i<items.length; i++){ %>
+      <li class="item">
+        <input type="checkbox">
+        <p><%= items[i] %></p>
+      </li>
+      <% } %>
+    </ul>
+    <form class="item form_submit" action="/" method="post">
+      <input type="text" name="newList" placeholder="새 할일을 입력하세요." autocomplete="off">
+      <button class="btn_submit" type="submit" name="btn_submit">
+        +
+      </button>
+    </form>
+  </section>
 
-  <ul>
-    <!-- <li><%= items %></li> -->
-
-    <% for(let i=0; i<items.length; i++){ %>
-      <li> <%= items[i] %> </li>
-    <% } %>
-  </ul>
-  <form action="/" method="post">
-    <input type="text" name="newList" placeholder="입력하세요.">
-    <button class="btn_submit" type="submit" name="btn_submit">
-      추가하기
-    </button>
-  </form>
 </html>
 </body>
