@@ -28,6 +28,9 @@ app.get('/work', function(req, res){
     listItems: workItems
   });
 });
+app.get('/about', function(req, res){
+  res.render('about')
+})
 
 // post
 app.post('/', function(req, res){
