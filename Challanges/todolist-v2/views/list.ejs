@@ -1,12 +1,14 @@
 <%- include("header") -%>
   <header class="box header">
     <h1><%= listTitle %></h1>
-    <h4 style="text-decoration: underline"><span class="localeDate"></span></h4>
+    <h4 style="text-decoration: underline"><%= dateObject.localeDate %></h4>
   </header>
   <section class="box toDo">
     <div class="item">
       <input type="checkbox">
-      <p><span class="isWeekend"></span>입니다.</p>
+      <p>
+        <%= dateObject.isWeekend %>입니다.
+      </p>
     </div>
     <div class="dateTest">
     </div>

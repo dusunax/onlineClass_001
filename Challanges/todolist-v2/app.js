@@ -2,11 +2,10 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const date = require(__dirname + '/date.js')
-console.log(date);
+const date = require(__dirname + '/date.js');
 
 const app = express();
-let items=['11'];
+let items=['11', '22'];
 let workItems=[];
 
 // use
@@ -18,17 +17,21 @@ app.set('view engine', 'ejs');
 
 // get
 app.get('/', function(req, res){
+  let dateObject = date.dateObject();
   res.render('list', {
     listName: 'main',
     listTitle: '기본 리스트1',
-    listItems: items
+    listItems: items,
+    dateObject: dateObject
   });
 });
 app.get('/work', function(req, res){
+  let dateObject = date.dateObject();
   res.render('list', {
     listName: 'work',
     listTitle: '할일 리스트2',
-    listItems: workItems
+    listItems: workItems,
+    dateObject: dateObject
   });
 });
 app.get('/about', function(req, res){
@@ -45,8 +48,6 @@ app.post('/', function(req, res){
     items.push(item);
     res.redirect('/');
   }
-
-  console.log(req.body);
 });
 // app.post('/work', function(req, res){
 //   let item=req.body.newList;
