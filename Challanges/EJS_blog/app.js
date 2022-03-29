@@ -22,7 +22,10 @@ let postArr=[];
 // get
 app.get('/', function(req, res){
   res.render(
-    'home', { homeStartingContent: homeStartingContent, contents: postArr }
+    'home', {
+      homeStartingContent: homeStartingContent,
+      posts: postArr 
+    }
   );
 });
 app.get('/about', function(req, res){
