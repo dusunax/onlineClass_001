@@ -45,7 +45,7 @@ app.post('/', function(req, res){
   console.log(req.body);
   if(req.body.page === 'compose'){
     res.render(
-      'compose', { currentPage: 'compose',  userAlerts: '작성완료' }
+      'compose', { currentPage: 'compose',  userAlerts: 'post완료' }
     );
   } else {
     res.redirect('/');
