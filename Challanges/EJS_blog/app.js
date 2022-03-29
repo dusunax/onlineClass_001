@@ -48,17 +48,13 @@ app.get('/posts/:postParams', function(req, res){
     homeStartingContent: homeStartingContent,
     posts: postArr
   });
-  console.log('route no1');
-  console.log(req.params);
+  // console.log(postArr);
+  postArr.forEach((post)=>{
+    if(post.title == req.params.postParams){
+      console.log('match found : '+req.params.postParams);
+    };
+  });
 });
-// app.get('/posts/:postParams/cart/:cartParams', function(req, res){
-//   res.render( 'home', {
-//     homeStartingContent: homeStartingContent,
-//     posts: postArr
-//   });
-//   console.log('route no2');
-//   console.log(req.params);
-// });
 
 // post
 app.post('/', function(req, res){
@@ -68,7 +64,6 @@ app.post('/', function(req, res){
     }
     postArr.unshift(post);
     res.redirect('/');
-    console.log(postArr);
     // res.render(
       //   'compose', { currentPage: 'compose',  userAlerts: 'post완료' }
       // );
