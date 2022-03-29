@@ -1,5 +1,5 @@
 //jshint esversion:6
-module.exports.dateObject = function(){
+exports.dateObject = function(){
   let td=new Date();
   let isWeekend = isItWeekend(td.getDay());
   let result_object = {
