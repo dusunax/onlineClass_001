@@ -21,12 +21,10 @@ let postArr=[];
 
 // get
 app.get('/', function(req, res){
-  res.render(
-    'home', {
-      homeStartingContent: homeStartingContent,
-      posts: postArr
-    }
-  );
+  res.render( 'home', {
+    homeStartingContent: homeStartingContent,
+    posts: postArr
+  });
 });
 app.get('/about', function(req, res){
   res.render(
@@ -43,6 +41,24 @@ app.get('/compose', function(req, res){
     'compose', { currentPage: 'compose',  userAlerts: '' }
   );
 });
+
+// params
+app.get('/posts/:postParams', function(req, res){
+  res.render( 'home', {
+    homeStartingContent: homeStartingContent,
+    posts: postArr
+  });
+  console.log('route no1');
+  console.log(req.params);
+});
+// app.get('/posts/:postParams/cart/:cartParams', function(req, res){
+//   res.render( 'home', {
+//     homeStartingContent: homeStartingContent,
+//     posts: postArr
+//   });
+//   console.log('route no2');
+//   console.log(req.params);
+// });
 
 // post
 app.post('/', function(req, res){
