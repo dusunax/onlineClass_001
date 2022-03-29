@@ -34,6 +34,11 @@ app.get('/contact', function(req, res){
     'contact', { contactContent: contactContent }
   );
 });
+app.get('/compose', function(req, res){
+  res.render(
+    'compose'
+  );
+});
 
 // post
 
