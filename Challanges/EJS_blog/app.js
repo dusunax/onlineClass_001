@@ -24,7 +24,7 @@ app.get('/', function(req, res){
   res.render(
     'home', {
       homeStartingContent: homeStartingContent,
-      posts: postArr 
+      posts: postArr
     }
   );
 });
@@ -50,7 +50,7 @@ app.post('/', function(req, res){
     const post={
       title: req.body.newTitle, body: req.body.newPost
     }
-    postArr.push(post);
+    postArr.unshift(post);
     res.redirect('/');
     console.log(postArr);
     // res.render(
