@@ -36,12 +36,21 @@ app.get('/contact', function(req, res){
 });
 app.get('/compose', function(req, res){
   res.render(
-    'compose'
+    'compose', { currentPage: 'compose',  userAlerts: '' }
   );
 });
 
 // post
-
+app.post('/', function(req, res){
+  console.log(req.body);
+  if(req.body.page === 'compose'){
+    res.render(
+      'compose', { currentPage: 'compose',  userAlerts: '작성완료' }
+    );
+  } else {
+    res.redirect('/');
+  }
+});
 
 
 

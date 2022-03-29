@@ -1,7 +1,10 @@
 <%- include('partials/header'); -%>
 
 <h1>Compose</h1>
-<input type="text" name="newPost">
-<button type="submit" name="compose">글쓰기</button>
+<form action="/" method="post">
+  <input type="text" name="newPost" autocomplete="off" autofocus>
+  <button type="submit" name="page" value=<%= currentPage %>>글쓰기</button>
+</form>
+<p style="color: blue; font-size: 10px; margin-top: 10px; margin-left: 2px;"><%= userAlerts %></p>
 
 <%- include('partials/footer'); -%>
