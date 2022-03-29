@@ -2,13 +2,13 @@
 
 <h1>Compose</h1>
 <form action="/" method="post">
-  <div class="col-12" style='margin-bottom: 1em;'>
-    <strong>제목</strong>
+  <div class="form-group">
+    <label>제목</label>
     <input class="form-control" type="text" name="newTitle" autocomplete="off" autofocus>
   </div>
-  <div class="col-12" style='margin-bottom: 1em;'>
-    <strong>내용</strong>
-    <textarea class="form-control" name="newPost" rows="8" cols="80"></textarea>
+  <div class="form-group">
+    <label>내용</label>
+    <textarea class="form-control" name="newPost" rows="8" cols="80" style="resize:none;"></textarea>
   </div>
   <button class="btn btn-primary" type="submit" name="page" value=<%= currentPage %>>글쓰기</button>
 </form>
