@@ -8,9 +8,12 @@
   <!-- forEach -->
   <% posts.forEach((post) => { %>
     <% const postPreview = post.body.substring(0, 100) + " ... " %>
-    
+
     <h3><%= post.title; %></h3>
-    <p><%= postPreview; %></p>
+    <p>
+      <%= postPreview; %>
+      <a href="/post/<%= post.title %>">더보기</a>
+    </p>
   <% }); %>
 
 <% }; %>
