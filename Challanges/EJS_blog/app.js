@@ -17,7 +17,10 @@ app.set('view engine', 'ejs');
 // use
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
-let postArr=[{title:'post one', body: 'psotsdf'}];
+let postArr=[
+  {title:'post one', body: '11.psoloremtsdpellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum f'},
+  {title:'post two', body: '22.psotspellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum df'}
+];
 
 // get
 app.get('/', function(req, res){
@@ -41,24 +44,23 @@ app.get('/compose', function(req, res){
     'compose', { currentPage: 'compose',  userAlerts: '' }
   );
 });
-
-// params
-app.get('/posts/:postParams', function(req, res){
-  res.render( 'home', {
-    homeStartingContent: homeStartingContent,
-    posts: postArr
-  });
-  // console.log(postArr);
+app.get('/post/:postID', function(req, res){
+  let reqPostTitle=_.lowerCase(req.params.postID);
+  let match=false;
   postArr.forEach((post)=>{
-    let reqTitle=_.lowerCase(req.params.postParams);
-    let storedTitle=_.lowerCase(post.title);
-
-    if(storedTitle == reqTitle){
-      console.log('match found: ""'+reqTitle+'"');
-    } else {
-      console.log('no match found');
+    let savedPostTitle=_.lowerCase(post.title);
+    if(savedPostTitle == reqPostTitle){
+      res.render(
+        'post', { postTitle: post.title, postBody: post.body }
+      );
+      match=true;
     }
   });
+  if(!match){
+      res.render(
+        'post', { postTitle: '게시물을 찾을 수 없습니다.', postBody: '다른 페이지를 이용해주세용:p' }
+      );
+  }
 });
 
 // post
@@ -76,10 +78,6 @@ app.post('/', function(req, res){
     res.redirect('/');
   }
 });
-
-
-
-
 
 
 app.listen(3000, function() {
