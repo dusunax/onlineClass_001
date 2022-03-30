@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 // use
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
-let postArr=[];
+let postArr=[{title:'post one', body: 'psotsdf'}];
 
 // get
 app.get('/', function(req, res){
@@ -50,9 +50,14 @@ app.get('/posts/:postParams', function(req, res){
   });
   // console.log(postArr);
   postArr.forEach((post)=>{
-    if(post.title == req.params.postParams){
-      console.log('match found : '+req.params.postParams);
-    };
+    let reqTitle=_.lowerCase(req.params.postParams);
+    let storedTitle=_.lowerCase(post.title);
+
+    if(storedTitle == reqTitle){
+      console.log('match found: ""'+reqTitle+'"');
+    } else {
+      console.log('no match found');
+    }
   });
 });
 
