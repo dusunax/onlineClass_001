@@ -1,12 +1,37 @@
 //jshint esversion:6
 
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const date = require(__dirname + '/date.js');
 
-const app = express();
-let items=['11', '22'];
-let workItems=[];
+const mongoose = require('mongoose');
+mongoose.connect(
+  'mongodb://0.0.0.0:27017/toDoList_v3'
+);
+mongoose.connection.on('error', (error) => {
+  console.error('DB연결 에러: ', error);
+});
+
+// DB 몽구스
+const itemSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  }
+});
+const Item = mongoose.model('Item', itemSchema);
+const item = new Item({
+  name: '새로운 이름'
+});
+item.save();
+// Item.insertOne(item, function(err){
+//   if(err){
+//     console.log(err);
+//   } else {
+//     console.log('아이템 입력 완료: '+item);
+//   }
+// })
 
 // use
 app.use(bodyParser.urlencoded({extended: true}));
