@@ -43,10 +43,10 @@ const Person = mongoose.model('person', personSchema);
 
 // # 값 설정 여기
 const fruit = new Fruit({
-  _id: 10,
-  name: 'Happy Apple',
-  rating: 9,
-  review: "세상의 밝은 면을 바라보는 긍정적인 사과"
+  _id: 11,
+  name: 'Calm Apple',
+  rating: 8,
+  review: "언제나 평정심을 유지하는 요가마스터 사과"
 });
 const person = new Person({
   name: 'John',
@@ -55,22 +55,31 @@ const person = new Person({
 });
 
 // # 명령 1: 과일입력
-// Fruit.insertMany([ fruit ], function(err, data){
-//   if(err){
-//     console.log("입력 에러"+err);
-//   } else {
-//     console.log('New data insert completed.');
-//     // console.log(data);
-//   }
-// });
+Fruit.insertMany([ fruit ], function(err, data){
+  if(err){
+    console.log("입력 에러"+err);
+  } else {
+    console.log('New data insert completed.');
+    // console.log(data);
+  }
+});
 
-// # 명령 1: 사람입력
+// # 명령 2: 사람입력
 // person.save((err)=>{
 //   if(err){
 //     console.log(err);
 //   } else {
 //     console.log('새 사람')
 //   }
+// });
+
+// # 수정하기
+// Person.updateOne({'name': 'Jane'}, {favouritefruit: fruit}, function(err){
+//   if(err){
+//     console.log(err);
+//   } else {
+//     console.log('수정 완료!');
+// }
 // });
 
 // # 삭제 여기서
