@@ -6,81 +6,61 @@ mongoose.connection.on('error', (error) => {
   console.error('연결 에러: ', error);
 });
 
-// insert - Fruit
-// const fruitSchema = new mongoose.Schema ({
-//   _id: Number,
-//   name: String,
-//   rating: Number,
-//   review: String
-// });
-// const Fruit = mongoose.model('Fruit', fruitSchema); // name,  schema
-// const fruit = new Fruit({
-//   _id: 4,
-//   name: 'Small Apple',
-//   rating: 6,
-//   review: "미니 사과"
-// });
-// console.log(fruit);
-// fruit.save();
-
-// insert - Person
-// const personSchema = new mongoose.Schema({
-//   name: String,
-//   age: Number
-// });
-// const Person = mongoose.model( 'Person', personSchema );
-// const person = new Person({
-//   name: 'Jane',
-//   age: 42
-// });
-// console.log(person);
-// person.save();
-
-
-// insert many()
+// 자료구조 => 스키마 정의, 모델 선언
 const fruitSchema = new mongoose.Schema ({
-  _id: Number,
-  name: String,
-  rating: Number,
-  review: String
+  _id: Number, // inc_field
+  name: {
+    type: String,
+    required: [true, 'you need name.']
+  },
+  rating: {
+    type: Number,
+    min: [1, "rating is must be between 1~10"],
+    max: [10, "rating is must be between 1~10"],
+    required: true
+  },
+  review: {
+    type: String,
+    max: [50, '50자 이내로 입력하세요.']
+  }
 });
-const Fruit = mongoose.model('Fruit', fruitSchema); // name,  schema
-// const red = new Fruit({
-//   _id: 8,
-//   name: 'Red Apple',
-//   rating: 8,
-//   review: "부사"
+const Fruit = mongoose.model('Fruit', fruitSchema);
+
+// insert
+const fruit = new Fruit({
+  _id: 10,
+  name: 'Bug Apple',
+  rating: 10,
+  review: "오류나는 맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛"
+});
+
+Fruit.insertMany([ fruit ], function(err, data){
+  if(err){
+    console.log("입력 에러"+err);
+  } else {
+    console.log('New data insert completed.');
+    // console.log(data);
+  }
+})
+
+// Fruit.deleteOne({_id: 10}, function(err, data){
+//   if(err){
+//     console.log("명령 에러"+err);
+//   } else {
+//     console.log("deleted");
+//   }
 // });
-// const green = new Fruit({
-//   _id: 6,
-//   name: 'Green Apple',
-//   rating: 8,
-//   review: "풋사과"
-// });
-// const blue = new Fruit({
-//   _id: 7,
-//   name: 'Blue Apple',
-//   rating: 9,
-//   review: "민트 사과"
-// });
-// Fruit.insertMany([ red, green, blue ], function(err, data){
+
+// find
+// Fruit.find((err, data)=>{
 //   if(err){
 //     console.log(err);
 //   } else {
-//     console.log('Apples are good.');
-//     console.log(data);
-//   }
-// })
-
-// find
-Fruit.find((err, data)=>{
-  if(err){
-    console.log(err);
-  } else {
-    console.log('Apples good.');
-    data.forEach((each)=>{
-      console.log(each.name);
-    });
-    mongoose.connection.close();
-  };
-});
+//     console.log('Apples good.');
+//     data.forEach((each)=>{
+//       console.log(each.name);
+//       // console.log(each);
+//     });
+//     mongoose.connection.close();
+//   };
+// });
