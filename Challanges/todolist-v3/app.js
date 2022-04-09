@@ -3,7 +3,6 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const date = require(__dirname + '/date.js');
 
 const mongoose = require('mongoose');
 mongoose.connect(
@@ -21,18 +20,42 @@ const itemSchema = new mongoose.Schema({
   }
 });
 const Item = mongoose.model('Item', itemSchema);
+
+// # 입력
 const item = new Item({
-  name: '새로운 이름'
+  name: '아이템'
 });
-item.save();
-// Item.insertOne(item, function(err){
-//   if(err){
-//     console.log(err);
-//   } else {
-//     console.log('아이템 입력 완료: '+item);
+const item1 = new Item({
+  name: '+버튼을 눌러 추가하세요.'
+});
+const item2 = new Item({
+  name: '완료한 리스트를 클릭해 체크하세요.'
+});
+const item3 = new Item({
+  name: 'to-do리스트입니다.'
+});
+
+// # 입력 여기서
+// item.save();
+// Item.insertMany([item3, item1, item2], function(err){
+//   if(err){ console.log(err); } else {
+//     console.log("여러개 입력 완료");
 //   }
 // })
 
+// # 전체삭제 empty collection
+// Item.deleteMany({}, function(){
+//   console.log("삭제완료");
+// });
+
+// # 전체검색
+let items;
+Item.find((err, result)=>{
+  items=result;
+  console.log(items);
+})
+
+//////////////////////////////////////////////////////////////////////////////
 // use
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
@@ -42,44 +65,18 @@ app.set('view engine', 'ejs');
 
 // get
 app.get('/', function(req, res){
-  let dateObject = date.dateObject();
   res.render('list', {
-    listName: 'main',
-    listTitle: '기본 리스트1',
-    listItems: items,
-    dateObject: dateObject
+    listTitle: 'today',
+    listName: 'dodo',
+    listItems: items
   });
 });
-app.get('/work', function(req, res){
-  let dateObject = date.dateObject();
-  res.render('list', {
-    listName: 'work',
-    listTitle: '할일 리스트2',
-    listItems: workItems,
-    dateObject: dateObject
-  });
-});
-app.get('/about', function(req, res){
-  res.render('about')
-})
 
 // post
 app.post('/', function(req, res){
-  let item=req.body.newList;
-  if(req.body.listName == "work"){
-    workItems.push(item);
-    res.redirect('/work');
-  } else {
-    items.push(item);
-    res.redirect('/');
-  }
+  // let item=req.body.newList;
+  // items.push(item);
 });
-// app.post('/work', function(req, res){
-//   let item=req.body.newList;
-//   res.redirect('/work');
-//
-//   console.log(req.body);
-// });
 
 // listen
 app.listen(3000,  function(){

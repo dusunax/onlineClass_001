@@ -1,24 +1,23 @@
 <%- include("header") -%>
   <header class="box header">
     <h1><%= listTitle %></h1>
-    <h4 style="text-decoration: underline"><%= dateObject.localeDate %></h4>
   </header>
   <section class="box toDo">
     <div class="item">
       <input type="checkbox">
-      <p>
-        <%= dateObject.isWeekend %>입니다.
+      <p class="item_text">
+        <%=  %>아이템 입니다.
       </p>
     </div>
     <div class="dateTest">
     </div>
     <ul>
-      <% for(let i=0; i<listItems.length; i++){ %>
+      <% listItems.forEach((item)=>{ %>
       <li class="item">
         <input type="checkbox">
-        <p class="item_text"><%= listItems[i] %></p>
+        <p class="item_text"><%= item.name %></p>
       </li>
-      <% } %>
+      <% }) %>
     </ul>
     <form class="item form_submit" action="/" method="post">
       <input type="text" name="newList" placeholder="새 할일을 입력하세요." autocomplete="off">
