@@ -6,15 +6,10 @@
     let itemArr = Array.from(document.getElementsByClassName("item"));
     itemArr.forEach((items) => {
       if (items !== itemArr[itemArr.length - 1]) {
-        // items.addEventListener("click", function(){
-        //   itemClick_lavel();
-        // })
-        console.log(items);
         items.onclick = itemClick_lavel;
       };
     });
     function itemClick_lavel() {
-      console.log(this);
       this.children[0].click();
     };
   })

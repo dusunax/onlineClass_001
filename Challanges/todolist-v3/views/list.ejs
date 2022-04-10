@@ -3,25 +3,24 @@
     <h1><%= listTitle %></h1>
   </header>
   <section class="box toDo">
-    <div class="item">
-      <input type="checkbox">
-      <p class="item_text">
-        <%=  %>아이템 입니다.
-      </p>
-    </div>
-    <div class="dateTest">
-    </div>
-    <ul>
-      <% listItems.forEach((item)=>{ %>
-      <li class="item">
-        <input type="checkbox">
-        <p class="item_text"><%= item.name %></p>
-      </li>
-      <% }) %>
-    </ul>
+    <form action="/delete" method="post">
+      <ul>
+        <% listItems.forEach((item)=>{ %>
+          <li class="item">
+            <input
+              type="checkbox"
+              name="chk_box"
+              value="<%= item._id %>"  
+              onchange="this.form.submit()"
+            >
+            <p class="item_text"><%= item.name %></p>
+          </li>
+          <% }) %>
+        </ul>
+    </form>
     <form class="item form_submit" action="/" method="post">
-      <input type="text" name="newList" placeholder="새 할일을 입력하세요." autocomplete="off">
-      <button class="btn_submit" type="submit" name="listName" value=<%= listName %>>
+      <input type="text" name="newListItem" autofocus placeholder="새 할일을 입력하세요." autocomplete="off">
+      <button class="btn_submit" type="submit" name="itemName" value=<%= listName %>>
         +
       </button>
     </form>

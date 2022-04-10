@@ -22,9 +22,6 @@ const itemSchema = new mongoose.Schema({
 const Item = mongoose.model('Item', itemSchema);
 
 // # 입력
-const item = new Item({
-  name: '아이템'
-});
 const item1 = new Item({
   name: '+버튼을 눌러 추가하세요.'
 });
@@ -34,28 +31,8 @@ const item2 = new Item({
 const item3 = new Item({
   name: 'to-do리스트입니다.'
 });
+const defaultItems=[item1, item2, item3];
 
-// # 입력 여기서
-// item.save();
-// Item.insertMany([item3, item1, item2], function(err){
-//   if(err){ console.log(err); } else {
-//     console.log("여러개 입력 완료");
-//   }
-// })
-
-// # 전체삭제 empty collection
-// Item.deleteMany({}, function(){
-//   console.log("삭제완료");
-// });
-
-// # 전체검색
-let items;
-Item.find((err, result)=>{
-  items=result;
-  console.log(items);
-})
-
-//////////////////////////////////////////////////////////////////////////////
 // use
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
@@ -65,17 +42,42 @@ app.set('view engine', 'ejs');
 
 // get
 app.get('/', function(req, res){
-  res.render('list', {
-    listTitle: 'today',
-    listName: 'dodo',
-    listItems: items
+  Item.find((err, foundItems)=>{
+    // console.log(foundItems);
+    if(foundItems.length === 0){
+      Item.insertMany(defaultItems, function(err){
+        if(err){ console.log(err);} else {
+          console.log("Printing default items");
+        };
+      });
+      res.redirect("/");
+    } else {
+      res.render('list', {
+        listTitle: 'today',
+        listName: 'dodo',
+        listItems: foundItems
+      });
+    };
   });
 });
 
 // post
 app.post('/', function(req, res){
-  // let item=req.body.newList;
-  // items.push(item);
+  let itemName=req.body.newListItem;
+  const newItem = new Item({
+    name: itemName
+  });
+  newItem.save();
+  res.redirect("/");
+});
+
+app.post("/delete", function(req, res){
+  // console.log(req.body.chk_box);
+  const chkedId = req.body.chk_box;
+  Item.findByIdAndRemove(chkedId, function(err){
+    if(err){}
+  });
+  res.redirect("/");
 });
 
 // listen
