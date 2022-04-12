@@ -10,17 +10,18 @@
             <input
               type="checkbox"
               name="chk_box"
-              value="<%= item._id %>"  
+              value="<%= item._id %>"
               onchange="this.form.submit()"
             >
             <p class="item_text"><%= item.name %></p>
           </li>
           <% }) %>
         </ul>
+        <input type="hidden" name="listName" value="<%= listTitle %>"></input>
     </form>
     <form class="item form_submit" action="/" method="post">
       <input type="text" name="newListItem" autofocus placeholder="새 할일을 입력하세요." autocomplete="off">
-      <button class="btn_submit" type="submit" name="itemName" value=<%= listName %>>
+      <button class="btn_submit" type="submit" name="list" value=<%= listTitle %>>
         +
       </button>
     </form>

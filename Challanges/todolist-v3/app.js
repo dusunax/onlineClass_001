@@ -20,6 +20,11 @@ const itemSchema = new mongoose.Schema({
   }
 });
 const Item = mongoose.model('Item', itemSchema);
+const listSchema = new mongoose.Schema({
+  name: String,
+  items: [itemSchema]
+});
+const List = mongoose.model('List', listSchema);
 
 // # 입력
 const item1 = new Item({
@@ -41,6 +46,30 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // get
+app.get("/:customListUrl", function(req, res){
+  const paramsList=req.params.customListUrl;
+  List.findOne({name: paramsList}, function(err, foundList){
+    if(!err){
+      if(!foundList){
+        console.log("New Data-List created.");
+        const list = new List({
+          name: paramsList,
+          items: defaultItems
+        });
+        list.save();
+        res.redirect("/"+paramsList)
+      } else{
+        console.log("print "+ foundList.name);
+        res.render('list', {
+          listTitle: foundList.name,
+          listName: 'dodo',
+          listItems: foundList.items
+        });
+      };
+    };
+  });
+})
+
 app.get('/', function(req, res){
   Item.find((err, foundItems)=>{
     // console.log(foundItems);
@@ -64,20 +93,41 @@ app.get('/', function(req, res){
 // post
 app.post('/', function(req, res){
   let itemName=req.body.newListItem;
+  let listName=req.body.list;
   const newItem = new Item({
     name: itemName
   });
-  newItem.save();
-  res.redirect("/");
+  if(listName === "today"){
+    newItem.save();
+    res.redirect("/");
+  } else {
+    console.log(listName);
+    List.findOne({name: listName}, function(err, foundList){
+      foundList.items.push(newItem);
+      foundList.save();
+      res.redirect("/" + listName);
+    });
+  }
 });
 
 app.post("/delete", function(req, res){
-  // console.log(req.body.chk_box);
   const chkedId = req.body.chk_box;
-  Item.findByIdAndRemove(chkedId, function(err){
-    if(err){}
-  });
-  res.redirect("/");
+  const listName = req.body.listName;
+
+  if(listName === "today"){
+    Item.findByIdAndRemove(chkedId, function(){});
+    res.redirect("/");
+  } else {
+    List.findOneAndUpdate(
+      {name: listName},
+      {$pull: { items: { _id: chkedId }}},
+      function(err, result){
+        if(!err){
+          res.redirect("/"+listName);
+        }
+      }
+    )
+  }
 });
 
 // listen
