@@ -3,8 +3,9 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-
 const mongoose = require('mongoose');
+const _ = require('lodash');
+
 mongoose.connect(
   'mongodb://0.0.0.0:27017/toDoList_v3'
 );
@@ -46,18 +47,18 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // get
-app.get("/:customListUrl", function(req, res){
-  const paramsList=req.params.customListUrl;
-  List.findOne({name: paramsList}, function(err, foundList){
+app.get("/:customListName", function(req, res){
+  const customListName=_.capitalize(req.params.customListName);
+  List.findOne({name: customListName}, function(err, foundList){
     if(!err){
       if(!foundList){
         console.log("New Data-List created.");
         const list = new List({
-          name: paramsList,
+          name: customListName,
           items: defaultItems
         });
         list.save();
-        res.redirect("/"+paramsList)
+        res.redirect("/"+customListName)
       } else{
         console.log("print "+ foundList.name);
         res.render('list', {
@@ -115,7 +116,7 @@ app.post("/delete", function(req, res){
   const listName = req.body.listName;
 
   if(listName === "today"){
-    Item.findByIdAndRemove(chkedId, function(){});
+     Item.findByIdAndRemove(chkedId, function(){});
     res.redirect("/");
   } else {
     List.findOneAndUpdate(
