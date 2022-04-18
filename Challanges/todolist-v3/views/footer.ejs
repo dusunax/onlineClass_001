@@ -3,14 +3,14 @@
 </footer>
 <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', function(){
-    let itemArr = Array.from(document.getElementsByClassName("item"));
+    let itemArr = Array.from(document.getElementsByClassName("item_text"));
     itemArr.forEach((items) => {
       if (items !== itemArr[itemArr.length - 1]) {
         items.onclick = itemClick_lavel;
       };
     });
     function itemClick_lavel() {
-      this.children[0].click();
+      this.parentNode.children[0].click();
     };
   })
 

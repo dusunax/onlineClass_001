@@ -9,20 +9,36 @@ const _ = require('lodash');
 // mongoose.connect(
 //   'mongodb://0.0.0.0:27017/toDoList_v3'
 // );
+mongoose.connect(
+  "mongodb+srv://user1:pass1@cluster0.cw4wk.mongodb.net/testUserDB"
+);
 
 // full driver code example ----------------------------------------------------
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri =
-"mongodb+srv://<username>:<password>@cluster0.cw4wk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
-mongoose.connection.on('error', (error) => {
-  console.error('DB연결 에러: ', error);
-});
+// const newItemSchema = new mongoose.Schema({
+//   newText: String
+// });
+// const NewItem = mongoose.model("NewItem", newItemSchema);
+// const testItem = new NewItem({
+//   newText: "hello world?"
+// })
+//
+// const { MongoClient, ServerApiVersion } = require('mongodb');
+// const uri =
+// "mongodb+srv://user1:pass1@cluster0.cw4wk.mongodb.net/testUserDB";
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   if(err){
+//     console.log(err);
+//   } else {
+//     collection.insertOne(testItem);
+//     console.log("new Item inserted");
+//   }
+//   // client.close();
+// });
+// mongoose.connection.on('error', (error) => {
+//   console.error('DB연결 에러: ', error);
+// });
 //------------------------------------------------------------------------------
 
 // DB 몽구스
@@ -144,6 +160,6 @@ app.post("/delete", function(req, res){
 });
 
 // listen
-app.listen(3000,  function(){
+app.listen(3000, function(){
   console.log('Sever started on port 3000');
 });
