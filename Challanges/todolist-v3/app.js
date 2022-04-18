@@ -6,12 +6,24 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const _ = require('lodash');
 
-mongoose.connect(
-  'mongodb://0.0.0.0:27017/toDoList_v3'
-);
+// mongoose.connect(
+//   'mongodb://0.0.0.0:27017/toDoList_v3'
+// );
+
+// full driver code example ----------------------------------------------------
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri =
+"mongodb+srv://<username>:<password>@cluster0.cw4wk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
 mongoose.connection.on('error', (error) => {
   console.error('DB연결 에러: ', error);
 });
+//------------------------------------------------------------------------------
 
 // DB 몽구스
 const itemSchema = new mongoose.Schema({
