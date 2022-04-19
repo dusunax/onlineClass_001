@@ -41,7 +41,7 @@ let posts = [];
 
 app.get("/", function(req, res){
   Post.find((err, data)=>{
-    console.log(data);
+    console.log("EVERY POST: "+data);
     res.render("home", {
       startingContent: homeStartingContent,
       posts: data
@@ -66,25 +66,25 @@ app.post("/compose", function(req, res){
     title: req.body.postTitle,
     content: req.body.postBody
   });
-  newPost.save();
-  res.redirect("/");
-
+  newPost.save((err)=>{
+    if(!err){
+      res.redirect("/");
+    }
+  });
 });
 
-app.get("/posts/:postName", function(req, res){
-  const requestedTitle = _.lowerCase(req.params.postName);
-
-  posts.forEach(function(post){
-    const storedTitle = _.lowerCase(post.title);
-
-    if (storedTitle === requestedTitle) {
+// express route parameter
+app.get("/posts/:postID", function(req, res){
+  const reqId = req.params.postID;
+  Post.findById(reqId, (err, post)=>{
+    if(!err){
+      console.log(post);
       res.render("post", {
         title: post.title,
         content: post.content
-      });
+      })
     }
-  });
-
+  })
 });
 
 app.listen(3000, function() {
