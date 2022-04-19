@@ -13,34 +13,6 @@ mongoose.connect(
   "mongodb+srv://user1:pass1@cluster0.cw4wk.mongodb.net/testUserDB"
 );
 
-// full driver code example ----------------------------------------------------
-// const newItemSchema = new mongoose.Schema({
-//   newText: String
-// });
-// const NewItem = mongoose.model("NewItem", newItemSchema);
-// const testItem = new NewItem({
-//   newText: "hello world?"
-// })
-//
-// const { MongoClient, ServerApiVersion } = require('mongodb');
-// const uri =
-// "mongodb+srv://user1:pass1@cluster0.cw4wk.mongodb.net/testUserDB";
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   if(err){
-//     console.log(err);
-//   } else {
-//     collection.insertOne(testItem);
-//     console.log("new Item inserted");
-//   }
-//   // client.close();
-// });
-// mongoose.connection.on('error', (error) => {
-//   console.error('DB연결 에러: ', error);
-// });
-//------------------------------------------------------------------------------
-
 // DB 몽구스
 const itemSchema = new mongoose.Schema({
   name: {
@@ -160,6 +132,10 @@ app.post("/delete", function(req, res){
 });
 
 // listen
-app.listen(3000, function(){
-  console.log('Sever started on port 3000');
+let port = process.env.PORT;
+if(port == null || port == "") {
+  port = 3000
+};
+app.listen(port, function(){
+  console.log('Sever started successfully.');
 });
