@@ -5,7 +5,9 @@ const app = express();
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-const md5 = require("md5");
+const encrypt = require("mongoose-encryption")
+
+console.log(process.env.API_KEY);
 
 // settings
 app.use(express.static("public"));
@@ -24,25 +26,12 @@ const userSchema = new mongoose.Schema({
     required: true
   }
 });
+userSchema.plugin(encrypt, {secret: process.env.SECRET, encryptedFields: ["password"]});
 const User = new mongoose.model("User", userSchema);
 
 // route
 app.get("/", (req, res)=>{
   res.render("home");
-});
-
-app.route("/register")
-.get((req, res)=>{
-  res.render("register");
-})
-.post((req, res)=>{
-  const newUser = new User({
-    email: req.body.username,
-    password: md5(req.body.password)
-  });
-  newUser.save((err)=>{
-    !err?res.render("secrets"):console.log(err);
-  })
 });
 
 app.route("/login")
@@ -51,7 +40,7 @@ app.route("/login")
 })
 .post((req, res)=>{
   const username = req.body.username;
-  const password = md5(req.body.password);
+  const password = req.body.password;
   User.findOne({email: username}, (err, foundUser)=>{
     if(err){
       console.log(err);
@@ -61,6 +50,20 @@ app.route("/login")
       }
     }
   });
+});
+
+app.route("/register")
+.get((req, res)=>{
+  res.render("register");
+})
+.post((req, res)=>{
+  const newUser = new User({
+    email: req.body.username,
+    password: req.body.password
+  });
+  newUser.save((err)=>{
+    !err?res.render("secrets"):console.log(err);
+  })
 });
 
 
