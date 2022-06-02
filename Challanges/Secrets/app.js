@@ -19,18 +19,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/secrets",
-    // userProfileURL: "https://www.google.com/oauth2/v3/userinfo"
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
 
 app.use(session({
   secret: process.env.SECRET,
@@ -47,7 +35,8 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String
-  }
+  },
+  googleId: String
 });
 
 //플러그인
@@ -56,13 +45,49 @@ userSchema.plugin(findOrCreate);
 
 const User = new mongoose.model("User", userSchema);
 passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser((user, done)=>{
+  done(null, user.id);
+});
+passport.deserializeUser((id, done)=>{
+  User.findById(id, (err, user)=>{
+    done(err, user);
+  })
+});
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/google/secrets",
+    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    console.log(profile); // 구글 로그인 정보
+
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      console.log("구글연동 아이디:");
+      console.log(profile.displayName);
+      console.log(profile.name.familyName, profile.name.givenName);
+      console.log(user);
+      return cb(err, user);
+    });
+  }
+));
 
 // route
 app.get("/", (req, res)=>{
   res.render("home");
 });
+
+// 구글
+app.get("/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+app.get("/auth/google/secrets",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function(req, res) {
+    res.redirect("/secrets");
+  }
+);
 
 app.route("/register")
 .get((req, res)=>{
