@@ -9,6 +9,7 @@ const passport=require('passport');
 const passportLocalMongoose=require('passport-local-mongoose');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const KakaoStrategy = require('passport-kakao').Strategy;
+const GitHubStrategy = require('passport-github').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 
 const app = express();
@@ -38,7 +39,8 @@ const userSchema = new mongoose.Schema({
     type: String
   },
   googleId: String,
-  kakaoId: String
+  kakaoId: String,
+  githubId: String
 });
 
 //플러그인
@@ -89,6 +91,17 @@ passport.use(new KakaoStrategy({
     });
   }
 ));
+passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_ID,
+    clientSecret: process.env.GITHUB_SECRET,
+    callbackURL: "http://localhost:3000/auth/github/secrets",
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ githubId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
 
 
 // route
@@ -112,6 +125,15 @@ app.get( "/auth/kakao",
 )
 app.get("/auth/kakao/secrets",
   passport.authenticate("kakao", { failureRedirect: "/login" }),
+  function(req, res) {
+    res.redirect("/secrets");
+  }
+);
+// 깃헙
+app.get('/auth/github',
+  passport.authenticate('github'));
+app.get("/auth/github/secrets",
+  passport.authenticate("github", { failureRedirect: "/login" }),
   function(req, res) {
     res.redirect("/secrets");
   }
