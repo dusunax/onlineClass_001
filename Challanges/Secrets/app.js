@@ -8,6 +8,7 @@ const session=require('express-session');
 const passport=require('passport');
 const passportLocalMongoose=require('passport-local-mongoose');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const KakaoStrategy = require('passport-kakao').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 
 const app = express();
@@ -36,7 +37,8 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String
   },
-  googleId: String
+  googleId: String,
+  kakaoId: String
 });
 
 //플러그인
@@ -72,6 +74,22 @@ passport.use(new GoogleStrategy({
     });
   }
 ));
+passport.use(new KakaoStrategy({
+    clientID: process.env.KAKAO_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/kakao/secrets",
+  },
+  (accessToken, refreshToken, profile, done) => {
+    console.log(profile);
+
+    User.findOrCreate({ kakaoId: profile.id }, (err, user)=>{
+      console.log("카카오연동 아이디:");
+      if(err){return done(err)}
+      return done(null, user)
+    });
+  }
+));
+
 
 // route
 app.get("/", (req, res)=>{
@@ -84,6 +102,16 @@ app.get("/auth/google",
 );
 app.get("/auth/google/secrets",
   passport.authenticate("google", { failureRedirect: "/login" }),
+  function(req, res) {
+    res.redirect("/secrets");
+  }
+);
+// 카카오
+app.get( "/auth/kakao",
+  passport.authenticate('kakao', { failureRedirect: '/login' })
+)
+app.get("/auth/kakao/secrets",
+  passport.authenticate("kakao", { failureRedirect: "/login" }),
   function(req, res) {
     res.redirect("/secrets");
   }
