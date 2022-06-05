@@ -30,7 +30,10 @@ app.use(session({
 app.use(passport.initialize());      // passport
 app.use(passport.session());
 
-mongoose.connect("mongodb://127.0.0.1:27017/userDB");
+// mongoose.connect("mongodb://127.0.0.1:27017/userDB");
+mongoose.connect(
+  "mongodb+srv://"+process.env.DBID+":"+process.env.DBPW+"@cluster0.cw4wk.mongodb.net/userDB"
+);
 const userSchema = new mongoose.Schema({
   email: {
     type: String
@@ -241,7 +244,8 @@ app.route("/submit")
   })
 });
 
-let port=(process.env.PORT == null || process.env.PORT == "")?3000:process.env.PORT;
+let port=process.env.PORT;
+if(process.env.PORT == null || process.env.PORT == ""){ port=3000 };
 app.listen(port, function(){
   console.log("Server started on port"+port);
 })
