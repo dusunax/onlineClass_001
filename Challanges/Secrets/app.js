@@ -241,7 +241,7 @@ app.route("/submit")
   })
 });
 
-
-app.listen(3000, function(){
-  console.log("Server started on port 3000");
+let port=(process.env.PORT == null || process.env.PORT == "")?3000:process.env.PORT;
+app.listen(port, function(){
+  console.log("Server started on port"+port);
 })
