@@ -40,7 +40,12 @@ const userSchema = new mongoose.Schema({
   },
   googleId: String,
   kakaoId: String,
-  githubId: String
+  githubId: String,
+  secretList: [
+    {
+      secret: String
+    }
+  ]
 });
 
 //플러그인
@@ -86,6 +91,7 @@ passport.use(new KakaoStrategy({
 
     User.findOrCreate({ kakaoId: profile.id }, (err, user)=>{
       console.log("카카오연동 아이디:");
+      console.log(user);
       if(err){return done(err)}
       return done(null, user)
     });
@@ -97,6 +103,8 @@ passport.use(new GitHubStrategy({
     callbackURL: "http://localhost:3000/auth/github/secrets",
   },
   function(accessToken, refreshToken, profile, cb) {
+    console.log("깃헙연동 아이디:");
+    console.log(profile);
     User.findOrCreate({ githubId: profile.id }, function (err, user) {
       return cb(err, user);
     });
@@ -157,15 +165,6 @@ app.route("/register")
   })
 });
 
-app.get("/secrets", (req, res)=>{
-  if(req.isAuthenticated()){
-    console.log("세션확인");
-    res.render("secrets");
-  } else {
-    res.redirect("/login");
-  }
-});
-
 app.route("/login")
 .get((req, res)=>{
   if(req.isAuthenticated()){
@@ -198,8 +197,49 @@ app.get("/logout", (req, res)=>{
   });
 })
 
+app.get("/secrets", (req, res)=>{
+  if(req.isAuthenticated()){
+    User.find({ "secretList" : {$ne : null} }, (err, found)=>{
+      if(err){ console.log(err) } else {
+        if(found){
+          res.render("secrets", {usersWithSecrets: found});
+        }
+      };
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
 
-
+app.route("/submit")
+.get((req, res)=>{
+  if(req.isAuthenticated()){
+    res.render("submit");
+  } else {
+    res.redirect("/login");
+  }
+})
+.post((req, res)=>{
+  const newSubmit={
+    secret: req.body.secret
+  };
+  User.findById(req.user._id, (err, found)=>{
+    if(err){
+      console.log(err);
+    } else {
+      found.secretList.push(newSubmit);
+      found.save(()=>{
+        User.find({ "secretList" : {$ne : null} }, (err, found)=>{
+          if(err){ console.log(err) } else {
+            if(found){
+              res.render("secrets", {usersWithSecrets: found});
+            }
+          };
+        });
+      })
+    }
+  })
+});
 
 
 app.listen(3000, function(){
