@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "gulp-cli": "^2.3.0"
+    "gulp-cli": "^2.3.0",
+    "tar": "^6.1.11"
   }
 }
